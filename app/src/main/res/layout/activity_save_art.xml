@@ -84,12 +84,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/genders"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             >
-            <Spinner
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/art_genders_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Widget.AppCompat.Spinner.DropDown"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -97,8 +97,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/artist"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             >
-            <Spinner
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/art_artist_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
