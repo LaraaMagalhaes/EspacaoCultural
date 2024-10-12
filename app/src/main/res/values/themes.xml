@@ -2,7 +2,11 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.AppCultural" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
+<<<<<<< HEAD
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+=======
+        <item name="colorPrimary">@color/blue2</item>
+>>>>>>> 73451f6 (atualizando tela de login e cadastro)
     </style>
 
     <style name="Theme.AppCultural" parent="Base.Theme.AppCultural" />
