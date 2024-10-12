@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">AppCultural</string>
+    <string name="title_activity_save_art">SaveArtActivity</string>
+    <string name="art_image_hint">Imagem da obra</string>
+    <string name="art_title_hint">Título da obra de arte</string>
+    <string name="art_publish_hint">Data de publicação</string>
+    <string name="art_description_hint">Descrição</string>
+    <string name="is_active">Está ativo</string>
+    <string name="genders">Gêneros</string>
+    <string name="artist">Artista</string>
+    <string name="art_location">Local da obra de arte</string>
+    <string name="save">Salvar</string>
 </resources>

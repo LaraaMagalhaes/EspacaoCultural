@@ -41,7 +41,7 @@
         app:layout_constraintStart_toStartOf="@+id/imageView2"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.43"
-        app:srcCompat="@drawable/Monalisa" />
+        app:srcCompat="@drawable/monalisa" />
 
     <TextView
         android:id="@+id/textView"
