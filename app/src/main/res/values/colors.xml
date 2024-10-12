@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
-<<<<<<< HEAD
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#A8CAFF</color>
-=======
     <color name="trasnparente">#00000000</color>
-    <color name="white">#FFFFFFFF</color>
     <color name="fundo">#D5E1FF</color>
     <color name="blue1">#7993F8</color>
     <color name="blue2">#273F98</color>
-
->>>>>>> 73451f6 (atualizando tela de login e cadastro)
 </resources>
