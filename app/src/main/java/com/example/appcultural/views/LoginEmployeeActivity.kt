@@ -13,6 +13,11 @@ class LoginEmployeeActivity : AppCompatActivity() {
         binding = ActivityLoginEmployeeBinding.inflate(layoutInflater)
         setContentView(binding.main)
 
+        binding.loginEmployeeButton.setOnClickListener {
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.signupButton.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)

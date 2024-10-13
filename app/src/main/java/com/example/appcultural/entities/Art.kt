@@ -1,11 +1,9 @@
 package com.example.appcultural.entities
 
-import java.util.Date
-
 data class Art(
     public val id: Long,
     public val name: String,
-    public val publishDate: Date,
+    public val publishDate: Int,
     public val description: String,
     public val author: String,
     public val isActive: Boolean,
