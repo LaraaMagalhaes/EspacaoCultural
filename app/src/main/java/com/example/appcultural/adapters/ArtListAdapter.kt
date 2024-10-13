@@ -1,6 +1,7 @@
 package com.example.appcultural.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.appcultural.R
 import com.example.appcultural.entities.Art
+import com.example.appcultural.views.ArtDetailActivity
 
 class ArtListAdapter(private val context: Context, private val data: ArrayList<Art>): RecyclerView.Adapter<ArtListAdapter.ArtViewHolder>() {
     class ArtViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {}
@@ -29,7 +31,13 @@ class ArtListAdapter(private val context: Context, private val data: ArrayList<A
 
         val image = holder.itemView.findViewById<ImageView>(R.id.art_image)
         Glide.with(context).load(content.imageUrl).into(image)
-        println(content.imageUrl)
         image.requestLayout()
+
+        image.setOnClickListener {
+            val intent = Intent(context, ArtDetailActivity::class.java)
+            intent.putExtra("id", content.id)
+            intent.putExtra("url", content.imageUrl)
+            context.startActivity(intent)
+        }
     }
 }
