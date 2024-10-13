@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:background="@color/fundo">
 
     <ImageView
@@ -35,14 +36,14 @@
         android:layout_height="68dp"
         android:layout_margin="32dp"
         android:layout_marginTop="12dp"
-        android:text="Copy the following link on the web you will be usingCopy the following link on the web you will be usingCopy the following link on the web you will be using"
+        android:text="Descubra o mundo da arte com o aplicativo Espaço Cultural! Explore uma vasta coleção de obras de arte de artistas renomados e emergentes, tudo na palma da sua mão."
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/login_visit"
         android:layout_width="252dp"
         android:layout_height="56dp"
         android:layout_marginTop="40dp"
@@ -52,8 +53,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
+
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/login_employee"
         android:layout_width="252dp"
         android:layout_height="56dp"
         android:layout_marginTop="24dp"
@@ -61,7 +63,7 @@
         android:text="Funcionário"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/login_visit" />
 
 
 
