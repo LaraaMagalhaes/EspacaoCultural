@@ -1,5 +1,6 @@
 package com.example.appcultural.views
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
@@ -52,6 +53,13 @@ class ArtDetailActivity : AppCompatActivity() {
         viewManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
         binding.recycleView.layoutManager = viewManager
         binding.recycleView.adapter = ArtListAdapter(this, repository.list())
+
+        val buttonComment = binding.commentButton
+        buttonComment.setOnClickListener {
+            val intent = Intent(this, CommentsActivity::class.java)
+            intent.putExtra("id", art.id)
+            startActivity(intent)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {

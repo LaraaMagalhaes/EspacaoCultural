@@ -79,7 +79,7 @@
             app:srcCompat="@drawable/outline_favorite_24" />
 
         <ImageButton
-            android:id="@+id/imageButton3"
+            android:id="@+id/commentButton"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:backgroundTint="@color/trasnparente"

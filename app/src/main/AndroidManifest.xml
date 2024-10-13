@@ -15,6 +15,9 @@
         android:theme="@style/Theme.AppCultural"
         tools:targetApi="31">
         <activity
+            android:name=".views.CommentsActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.ArtDetailActivity"
             android:exported="false" />
         <activity

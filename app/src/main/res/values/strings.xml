@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">AppCultural</string>
     <string name="title_activity_save_art">SaveArtActivity</string>
+    <string name="comments">Comentários</string>
     <string name="details">Detalhes</string>
     <string name="art_image_hint">Imagem da obra</string>
     <string name="art_title_hint">Título da obra de arte</string>
