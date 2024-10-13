@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/fundo">
+    android:background="@color/fundo"
+    android:id="@+id/main">
 
     <ImageView
         android:id="@+id/imageView3"
@@ -14,19 +15,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/banner_login" />
-
-    <!--    <EditText-->
-    <!--        android:id="@+id/editTextText"-->
-    <!--        android:layout_width="252dp"-->
-    <!--        android:layout_height="53dp"-->
-    <!--        android:layout_marginTop="28dp"-->
-    <!--        android:ems="10"-->
-    <!--        android:inputType="text"-->
-    <!--        android:hint="Name"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintHorizontal_bias="0.496"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/textView4" />-->
 
     <TextView
         android:id="@+id/textView5"
@@ -123,7 +111,7 @@
         android:id="@+id/buttonEntrar"
         android:layout_width="229dp"
         android:layout_height="55dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="32dp"
         android:backgroundTint="@color/blue2"
         android:text="Entrar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -142,20 +130,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonEntrar"/>
 
-
-
-    <!--    <EditText-->
-    <!--        android:id="@+id/editTextTextPassword"-->
-    <!--        android:layout_width="252dp"-->
-    <!--        android:layout_height="53dp"-->
-    <!--        android:layout_marginTop="24dp"-->
-    <!--        android:ems="10"-->
-    <!--        android:inputType="textPassword"-->
-    <!--        android:hint="senha"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintHorizontal_bias="0.497"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/editTextText" />-->
-
-
+    <Button
+        android:id="@+id/buttonCancel"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Cancelar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonGoogle"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

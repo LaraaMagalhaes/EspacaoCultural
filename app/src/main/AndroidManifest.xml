@@ -13,6 +13,9 @@
         android:theme="@style/Theme.AppCultural"
         tools:targetApi="31">
         <activity
+            android:name=".views.SignUpVisitActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.LoginVisitActivity"
             android:exported="false" />
         <activity
