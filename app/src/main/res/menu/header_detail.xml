@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/edit"
+        android:icon="@drawable/rounded_edit_24"
+        android:title="@string/art_title_hint"
+        android:contentDescription="@string/art_title_hint"
+        />
+    <item
+        android:id="@+id/share"
+        android:icon="@drawable/share_24"
+        android:title="@string/art_title_hint"
+        android:contentDescription="@string/art_title_hint"
+        />
+</menu>

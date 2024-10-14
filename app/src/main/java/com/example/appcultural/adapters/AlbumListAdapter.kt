@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.appcultural.R
 import com.example.appcultural.entities.Album
+import com.example.appcultural.views.AlbumDetailActivity
 
 class AlbumListAdapter(
     private val context: Context,
@@ -32,11 +33,12 @@ class AlbumListAdapter(
         Glide.with(context).load(album.imageUrl).into(holder.imageAlbum)
 
         // Implementar o clique no item para abrir os detalhes do álbum
-//        holder.itemView.setOnClickListener {
-//            val intent = Intent(context, AlbumDetailActivity::class.java)
-//            intent.putExtra("albumId", album.id)
-//            context.startActivity(intent)
-//        }
+        holder.itemView.setOnClickListener {
+            val intent = Intent(context, AlbumDetailActivity::class.java)
+            intent.putExtra("albumId", album.id)
+            intent.putExtra("albumName", album.name)
+            context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int = albumList.size

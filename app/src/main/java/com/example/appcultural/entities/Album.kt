@@ -2,6 +2,6 @@ package com.example.appcultural.entities
 
 data class Album(
     val id: Int,
-    val name: String,
+    var name: String,
     val imageUrl: String
 )
