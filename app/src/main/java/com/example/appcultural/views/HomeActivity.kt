@@ -1,11 +1,13 @@
 package com.example.appcultural.views
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.appcultural.R
 import com.example.appcultural.adapters.ArtListAdapter
 import com.example.appcultural.data.MockArtRepository
 import com.example.appcultural.databinding.ActivityHomeBinding
@@ -29,5 +31,16 @@ class HomeActivity : AppCompatActivity() {
         viewManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
         binding.recycleView.layoutManager = viewManager
         binding.recycleView.adapter = ArtListAdapter(this, repository.list())
+
+        binding.bottomNav.setOnItemSelectedListener {
+            when(it.itemId) {
+                R.id.albums -> {
+                    startActivity(Intent(this, AlbumsListActivity::class.java))
+                    true
+                }
+
+                else -> true
+            }
+        }
     }
 }

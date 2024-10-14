@@ -6,6 +6,11 @@
         android:icon="@drawable/home"
         />
     <item
+        android:id="@+id/albums"
+        android:title="Albuns"
+        android:icon="@drawable/rounded_bookmark_24"
+        />
+    <item
         android:id="@+id/schedule"
         android:title="Agendamento"
         android:icon="@drawable/home"
