@@ -42,6 +42,10 @@ class HomeActivity : AppCompatActivity() {
                     startActivity(Intent(this, ScheduleActivity::class.java))
                     true
                 }
+                R.id.settings -> {
+                    startActivity(Intent(this, SettingActivity::class.java))
+                    true
+                }
 
                 else -> true
             }
