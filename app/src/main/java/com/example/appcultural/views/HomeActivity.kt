@@ -38,6 +38,10 @@ class HomeActivity : AppCompatActivity() {
                     startActivity(Intent(this, AlbumsListActivity::class.java))
                     true
                 }
+                R.id.schedule -> {
+                    startActivity(Intent(this, ScheduleActivity::class.java))
+                    true
+                }
 
                 else -> true
             }

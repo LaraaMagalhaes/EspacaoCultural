@@ -13,11 +13,11 @@
     <item
         android:id="@+id/schedule"
         android:title="Agendamento"
-        android:icon="@drawable/home"
+        android:icon="@drawable/rounded_calendar_month_24"
         />
     <item
         android:id="@+id/settings"
         android:title="Configurações"
-        android:icon="@drawable/home"
+        android:icon="@drawable/settings_24"
         />
 </menu>
