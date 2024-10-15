@@ -2,19 +2,20 @@ package com.example.appcultural.views
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.EditText
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.appcultural.R
 import com.example.appcultural.adapters.AlbumListAdapter
 import com.example.appcultural.databinding.ActivityAlbumsListBinding
 import com.example.appcultural.entities.Album
 
-class AlbumsListActivity : AppCompatActivity() {
+class AlbumsListActivity : Fragment() {
     private lateinit var binding: ActivityAlbumsListBinding
     private lateinit var albumAdapter: AlbumListAdapter
 
@@ -24,19 +25,25 @@ class AlbumsListActivity : AppCompatActivity() {
         )
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        binding = ActivityAlbumsListBinding.inflate(layoutInflater)
-        setContentView(binding.main)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = ActivityAlbumsListBinding.inflate(inflater, container, false)
+        return binding.main
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        albumAdapter = AlbumListAdapter(this, albumList)
-        binding.recycleView.layoutManager = GridLayoutManager(this, 2)
+        albumAdapter = AlbumListAdapter(requireContext(), albumList)
+        binding.recycleView.layoutManager = GridLayoutManager(requireContext(), 2)
         binding.recycleView.adapter = albumAdapter
 
         binding.addAlbumButton.setOnClickListener {
@@ -46,8 +53,8 @@ class AlbumsListActivity : AppCompatActivity() {
 
     // Função para mostrar um popup de adicionar álbum
     private fun showAddAlbumPopup() {
-        val dialogBuilder = AlertDialog.Builder(this)
-        val dialogView = LayoutInflater.from(this).inflate(R.layout.activity_dialog_add_album, null)
+        val dialogBuilder = AlertDialog.Builder(requireContext())
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.activity_dialog_add_album, null)
         dialogBuilder.setView(dialogView)
 
         val albumNameInput = dialogView.findViewById<EditText>(R.id.edit_album_name)

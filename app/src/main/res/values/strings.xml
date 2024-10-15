@@ -12,4 +12,6 @@
     <string name="artist">Artista</string>
     <string name="art_location">Local da obra de arte</string>
     <string name="save">Salvar</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

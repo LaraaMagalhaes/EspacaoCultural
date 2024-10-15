@@ -15,16 +15,10 @@
         android:theme="@style/Theme.AppCultural"
         tools:targetApi="31">
         <activity
-            android:name=".views.SettingActivity"
-            android:exported="false" />
-        <activity
-            android:name=".views.ScheduleActivity"
+            android:name=".views.BottomActivity"
             android:exported="false" />
         <activity
             android:name=".views.AlbumDetailActivity"
-            android:exported="false" />
-        <activity
-            android:name=".views.AlbumsListActivity"
             android:exported="false" />
         <activity
             android:name=".views.CommentsActivity"
@@ -32,9 +26,6 @@
         <activity
             android:name=".views.ArtDetailActivity"
             android:exported="false" />
-        <activity
-            android:name=".views.HomeActivity"
-            android:exported="true" />
         <activity
             android:name=".views.SignUpActivity"
             android:exported="false" />

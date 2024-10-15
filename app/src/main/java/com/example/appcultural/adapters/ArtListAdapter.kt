@@ -16,6 +16,7 @@ class ArtListAdapter(private val context: Context, private val data: ArrayList<A
     class ArtViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtViewHolder {
+        println("AAA")
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.art_item, parent, false)
 

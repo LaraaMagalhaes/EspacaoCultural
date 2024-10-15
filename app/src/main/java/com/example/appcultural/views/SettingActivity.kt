@@ -2,21 +2,28 @@ package com.example.appcultural.views
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.appcultural.R
+import androidx.fragment.app.Fragment
 import com.example.appcultural.databinding.ActivitySettingBinding
 
-class SettingActivity : AppCompatActivity() {
+class SettingActivity : Fragment() {
     private lateinit var binding: ActivitySettingBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        binding = ActivitySettingBinding.inflate(layoutInflater)
-        setContentView(binding.main)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = ActivitySettingBinding.inflate(inflater, container, false)
+        return binding.main
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -24,7 +31,7 @@ class SettingActivity : AppCompatActivity() {
         }
 
         binding.buttonAddArt.setOnClickListener {
-            startActivity(Intent(this, SaveArtActivity::class.java))
+            startActivity(Intent(requireContext(), SaveArtActivity::class.java))
         }
     }
 }

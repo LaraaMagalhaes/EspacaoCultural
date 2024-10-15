@@ -14,7 +14,7 @@ class LoginEmployeeActivity : AppCompatActivity() {
         setContentView(binding.main)
 
         binding.loginEmployeeButton.setOnClickListener {
-            val intent = Intent(this, HomeActivity::class.java)
+            val intent = Intent(this, BottomActivity::class.java)
             startActivity(intent)
         }
 
