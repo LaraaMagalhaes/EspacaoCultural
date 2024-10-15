@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.SaveArtLocation">
+    tools:context=".views.SaveArtLocationActivity">
 
     <ImageView
         android:id="@+id/image_location"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/save_art_button"
+        android:id="@+id/save_location_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"

@@ -3,6 +3,7 @@ package com.example.appcultural.views
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -12,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.example.appcultural.R
 import com.example.appcultural.adapters.ArtListAdapter
 import com.example.appcultural.data.MockArtRepository
+import com.example.appcultural.data.MockAuthProvider
 import com.example.appcultural.databinding.ActivityArtDetailBinding
 
 class ArtDetailActivity : AppCompatActivity() {
@@ -60,6 +62,13 @@ class ArtDetailActivity : AppCompatActivity() {
             intent.putExtra("id", art.id)
             startActivity(intent)
         }
+
+        val authProvider = MockAuthProvider(this)
+        val visibilityState = if (authProvider.isAdmin) View.VISIBLE else View.GONE
+        binding.editButton.setOnClickListener {
+            startActivity(Intent(this, SaveArtActivity::class.java))
+        }
+        binding.editButton.visibility = visibilityState
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {

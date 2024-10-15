@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">AppCultural</string>
-    <string name="title_activity_save_art">SaveArtActivity</string>
+    <string name="title_activity_save_art">Salvar arte</string>
     <string name="comments">Comentários</string>
     <string name="details">Detalhes</string>
     <string name="art_image_hint">Imagem da obra</string>
@@ -12,6 +12,4 @@
     <string name="artist">Artista</string>
     <string name="art_location">Local da obra de arte</string>
     <string name="save">Salvar</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

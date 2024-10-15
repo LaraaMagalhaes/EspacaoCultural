@@ -1,6 +1,7 @@
 package com.example.appcultural.views
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -11,15 +12,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.appcultural.R
+import com.example.appcultural.databinding.ActivitySaveArtLocationBinding
 
-class SaveArtLocation : AppCompatActivity() {
+class SaveArtLocationActivity : AppCompatActivity() {
+    private lateinit var binding: ActivitySaveArtLocationBinding
     private var currentCircleView: CirclePointView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_save_art_location)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        binding = ActivitySaveArtLocationBinding.inflate(layoutInflater)
+        setContentView(binding.main)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
@@ -39,6 +43,10 @@ class SaveArtLocation : AppCompatActivity() {
                 addCircle(x + imageView.x, y + imageView.y)
             }
             true
+        }
+
+        binding.saveLocationButton.setOnClickListener {
+            finish()
         }
     }
 

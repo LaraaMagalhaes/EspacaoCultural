@@ -39,7 +39,7 @@
             android:name=".views.LoginEmployeeActivity"
             android:exported="false" />
         <activity
-            android:name=".views.SaveArtLocation"
+            android:name=".views.SaveArtLocationActivity"
             android:exported="true" />
         <activity
             android:name=".views.SaveArtActivity"
