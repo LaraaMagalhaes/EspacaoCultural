@@ -4,13 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.appcultural.R
 import com.example.appcultural.adapters.ArtListAdapter
 import com.example.appcultural.data.MockArtRepository
 import com.example.appcultural.databinding.ActivityHomeBinding
+import com.example.appcultural.entities.Album
+import com.example.appcultural.views.AlbumsListActivity.Companion.albumList
 
 class HomeActivity: Fragment() {
     private lateinit var binding: ActivityHomeBinding
@@ -37,5 +42,27 @@ class HomeActivity: Fragment() {
         viewManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
         binding.recycleView.layoutManager = viewManager
         binding.recycleView.adapter = ArtListAdapter(requireContext(), repository.list())
+
+        binding.filterActionButton.setOnClickListener {
+            showFilterPopup()
+        }
+    }
+
+    private fun showFilterPopup() {
+        val dialogBuilder = AlertDialog.Builder(requireContext())
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.activity_dialog_art_filter, null)
+
+        dialogBuilder.setView(dialogView)
+        dialogBuilder.setTitle("Filtrar")
+        dialogBuilder.setPositiveButton("Filtrar") { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        dialogBuilder.setNegativeButton("Cancelar") { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        val dialog = dialogBuilder.create()
+        dialog.show()
     }
 }
