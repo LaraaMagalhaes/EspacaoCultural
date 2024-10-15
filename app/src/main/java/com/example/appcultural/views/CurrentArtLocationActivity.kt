@@ -2,49 +2,30 @@ package com.example.appcultural.views
 
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.appcultural.R
-import com.example.appcultural.databinding.ActivitySaveArtLocationBinding
+import com.example.appcultural.databinding.ActivityCurrentArtLocationBinding
 
-class SaveArtLocationActivity : AppCompatActivity() {
-    private lateinit var binding: ActivitySaveArtLocationBinding
-    private var currentCircleView: CirclePointView? = null
+class CurrentArtLocationActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityCurrentArtLocationBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding = ActivitySaveArtLocationBinding.inflate(layoutInflater)
+        binding = ActivityCurrentArtLocationBinding.inflate(layoutInflater)
         setContentView(binding.main)
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val imageView = findViewById<ImageView>(R.id.image_location)
-        imageView.setOnTouchListener { v, event ->
-            if (event.action == MotionEvent.ACTION_UP) {
-                val x = event.x
-                val y = event.y
-                currentCircleView?.let {
-                    it.visibility = View.GONE
-                    (v.parent as ViewGroup).removeView(it)
-                }
-                addCircle(x + imageView.x, y + imageView.y)
-            }
-            true
-        }
 
-        binding.saveLocationButton.setOnClickListener {
-            finish()
-        }
+        setSupportActionBar(binding.topAppBar);
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun addCircle(x: Float, y: Float) {
@@ -54,6 +35,17 @@ class SaveArtLocationActivity : AppCompatActivity() {
             FrameLayout.LayoutParams.MATCH_PARENT
         )
         addContentView(circleView, layoutParams)
-        currentCircleView = circleView
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.home -> {
+            finish()
+            true
+        }
+
+        else -> {
+            finish()
+            true
+        }
     }
 }

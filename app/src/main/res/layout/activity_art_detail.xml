@@ -115,11 +115,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
         android:text="Recomentados"
         android:textAppearance="?attr/textAppearanceTitleMedium"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/art_location_button" />
 
     <TextView
         android:id="@+id/art_description_detail"
@@ -135,11 +134,22 @@
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:text="Mais"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/art_description_detail" />
+
+    <Button
+        android:id="@+id/art_location_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Localização"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        style="@style/Widget.Material3.Button.TextButton"
+        app:layout_constraintTop_toBottomOf="@+id/button2" />
 
     <ProgressBar
         android:id="@+id/progressBar"

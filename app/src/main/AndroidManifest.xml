@@ -15,6 +15,9 @@
         android:theme="@style/Theme.AppCultural"
         tools:targetApi="31">
         <activity
+            android:name=".views.CurrentArtLocationActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.BottomActivity"
             android:exported="false" />
         <activity

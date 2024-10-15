@@ -69,6 +69,10 @@ class ArtDetailActivity : AppCompatActivity() {
             startActivity(Intent(this, SaveArtActivity::class.java))
         }
         binding.editButton.visibility = visibilityState
+
+        binding.artLocationButton.setOnClickListener {
+            startActivity(Intent(this, CurrentArtLocationActivity::class.java))
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
