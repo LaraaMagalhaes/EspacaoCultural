@@ -30,6 +30,10 @@ class SettingActivity : Fragment() {
             insets
         }
 
+        binding.buttonAccount.setOnClickListener {
+            startActivity(Intent(requireContext(), AccountActivity::class.java))
+        }
+
         binding.buttonAddArt.setOnClickListener {
             startActivity(Intent(requireContext(), SaveArtActivity::class.java))
         }

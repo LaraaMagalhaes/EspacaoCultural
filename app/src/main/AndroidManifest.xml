@@ -15,6 +15,9 @@
         android:theme="@style/Theme.AppCultural"
         tools:targetApi="31">
         <activity
+            android:name=".views.AccountActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.ScheduleListActivity"
             android:exported="false" />
         <activity
