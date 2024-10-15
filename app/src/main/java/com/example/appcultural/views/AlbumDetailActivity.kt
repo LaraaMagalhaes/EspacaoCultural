@@ -3,6 +3,8 @@ package com.example.appcultural.views
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.EditText
 import android.widget.TextView
@@ -89,29 +91,33 @@ class AlbumDetailActivity : AppCompatActivity() {
         return AlbumsListActivity.albumList.find { it.id == albumId }
     }
 
-        override fun onOptionsItemSelected(item: MenuItem): Boolean {
-            return when (item.itemId) {
-                R.id.home -> {
-                    finish()
-                    true
-                }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.home -> {
+                finish()
+                true
+            }
+            R.id.edit -> {
+                val album = getAlbumById(intent.getIntExtra("albumId", -1)) ?: return true
+                showEditAlbumNamePopup(album, binding.topAppBar)
+                true
+            }
 
-                R.id.edit -> {
-                    val album = getAlbumById(intent.getIntExtra("albumId", -1)) ?: return true
-                    showEditAlbumNamePopup(album, binding.topAppBar)
-                    true
-                }
+            R.id.share -> {
+                val album = getAlbumById(intent.getIntExtra("albumId", -1)) ?: return true
+                shareAlbum(album)
+                true
+            }
 
-                R.id.share -> {
-                    val album = getAlbumById(intent.getIntExtra("albumId", -1)) ?: return true
-                    shareAlbum(album)
-                    true
-                }
-
-                else -> {
-                    finish()
-                    true
-                }
+            else -> {
+                finish()
+                true
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.header_detail, menu)
+        return true
+    }
 }

@@ -3,13 +3,13 @@
     <item
         android:id="@+id/edit"
         android:icon="@drawable/rounded_edit_24"
-        android:title="@string/art_title_hint"
-        android:contentDescription="@string/art_title_hint"
+        android:title="Editar"
+        android:contentDescription="Editar"
         />
     <item
         android:id="@+id/share"
         android:icon="@drawable/share_24"
-        android:title="@string/art_title_hint"
-        android:contentDescription="@string/art_title_hint"
+        android:title="Compartilhar"
+        android:contentDescription="Compartilhar"
         />
 </menu>
