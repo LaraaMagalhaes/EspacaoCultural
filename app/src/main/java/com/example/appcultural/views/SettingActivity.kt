@@ -33,5 +33,9 @@ class SettingActivity : Fragment() {
         binding.buttonAddArt.setOnClickListener {
             startActivity(Intent(requireContext(), SaveArtActivity::class.java))
         }
+
+        binding.buttonSchedule.setOnClickListener {
+            startActivity(Intent(requireContext(), ScheduleListActivity::class.java))
+        }
     }
 }
