@@ -1,0 +1,76 @@
+{
+  "project_info": {
+    "project_number": "110469072601",
+    "project_id": "uniculturafirebase",
+    "storage_bucket": "uniculturafirebase.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:110469072601:android:351b720b1c115c5a8660c8",
+        "android_client_info": {
+          "package_name": "com.example.appcultural"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "110469072601-4fhepgg7kr6q2d2p8sardnhkllhrh8bf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.appcultural",
+            "certificate_hash": "2c6979f23bae97a8cac2af31238f2044c7a0e5ae"
+          }
+        },
+        {
+          "client_id": "110469072601-4abf8tbqeh4qa5hop4ce21brv945mp90.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB93RZrppGKgF5V1fgF57DqFe5N-MQYUoU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "110469072601-4abf8tbqeh4qa5hop4ce21brv945mp90.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:110469072601:android:e9ca4df22567dd268660c8",
+        "android_client_info": {
+          "package_name": "com.example.unicultura"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "110469072601-4abf8tbqeh4qa5hop4ce21brv945mp90.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB93RZrppGKgF5V1fgF57DqFe5N-MQYUoU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "110469072601-4abf8tbqeh4qa5hop4ce21brv945mp90.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
