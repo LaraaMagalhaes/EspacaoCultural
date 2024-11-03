@@ -9,6 +9,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.appcultural.databinding.ActivityWelcomeBinding
 import com.example.appcultural.views.LoginEmployeeActivity
 import com.example.appcultural.views.LoginVisitActivity
+import com.example.appcultural.views.SignUpVisitActivity
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWelcomeBinding
@@ -32,5 +33,10 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, LoginEmployeeActivity::class.java)
             startActivity(intent)
         }
+        
+//        binding.signUpVisit.setOnClickListener {
+//            val intent = Intent(this, SignUpVisitActivity::class.java)
+//            startActivity(intent)
+//        } Erro:/
     }
 }
