@@ -9,8 +9,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.appcultural.data.MockAuthProvider
 import com.example.appcultural.databinding.ActivityLoginVisitBinding
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.libraries.identity.googleid.GetGoogleIdOption
+//import com.google.android.gms.auth.api.signin.GoogleSignInClient
+//import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
