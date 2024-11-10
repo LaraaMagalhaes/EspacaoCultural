@@ -5,18 +5,19 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.appcultural.databinding.ActivitySignupVisitBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.example.appcultural.data.FirebaseAuthProvider
 
 
 class SignUpVisitActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignupVisitBinding
-    private lateinit var auth: FirebaseAuth
+    private lateinit var authProvider: FirebaseAuthProvider
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignupVisitBinding.inflate(layoutInflater)
         setContentView(binding.main)
 
-        auth = FirebaseAuth.getInstance()
+        authProvider = FirebaseAuthProvider()
 
         binding.buttonSubmit.setOnClickListener {
             val username = binding.textInputLayoutUsername.editText?.text.toString()
@@ -37,13 +38,12 @@ class SignUpVisitActivity : AppCompatActivity() {
     }
 
     private fun registerUser(email: String, password: String) {
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
+        authProvider.create(email, password) { success, errorMessage ->
+        if (success) {
                     Toast.makeText(this, "Cadastro realizado com sucesso", Toast.LENGTH_SHORT).show()
                     finish()
                 } else {
-                    Toast.makeText(this, "Falha no cadastro: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Falha no cadastro: ${errorMessage}", Toast.LENGTH_SHORT).show()
                 }
             }
     }
