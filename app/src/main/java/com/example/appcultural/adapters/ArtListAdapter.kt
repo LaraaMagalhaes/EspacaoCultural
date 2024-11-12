@@ -12,7 +12,7 @@ import com.example.appcultural.R
 import com.example.appcultural.entities.Art
 import com.example.appcultural.views.ArtDetailActivity
 
-class ArtListAdapter(private val context: Context, private val data: ArrayList<Art>): RecyclerView.Adapter<ArtListAdapter.ArtViewHolder>() {
+class ArtListAdapter(private val context: Context, private val data: List<Art>): RecyclerView.Adapter<ArtListAdapter.ArtViewHolder>() {
     class ArtViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtViewHolder {

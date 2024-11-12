@@ -60,4 +60,6 @@ dependencies {
     implementation (libs.googleid)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.firestore)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.androidx.lifecycle.runtime.ktx.v260)
 }

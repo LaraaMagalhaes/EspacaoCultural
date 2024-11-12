@@ -1,7 +1,7 @@
 package com.example.appcultural.entities
 
 data class Art(
-    public val id: Int,
+    public var id: String,
     public val name: String,
     public val publishDate: Int,
     public val description: String,
