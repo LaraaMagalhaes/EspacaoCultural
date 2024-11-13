@@ -15,20 +15,27 @@ import com.example.appcultural.adapters.ArtListAdapter
 import com.example.appcultural.data.MockArtRepository
 import com.example.appcultural.data.MockAuthProvider
 import com.example.appcultural.databinding.ActivityArtDetailBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class ArtDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityArtDetailBinding
+    private lateinit var db: FirebaseFirestore
+    private var isLiked = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityArtDetailBinding.inflate(layoutInflater)
-        setContentView(binding.main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        setContentView(binding.constraintLayoutMain)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.constraintLayout_main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        db = FirebaseFirestore.getInstance()
+
         val repository = MockArtRepository()
         val id = intent.getIntExtra("id", 0)
         val art = repository.findById(id)
@@ -37,7 +44,7 @@ class ArtDetailActivity : AppCompatActivity() {
             return
         }
 
-        val image = binding.artImageDetail
+        val image = binding.imageArtDetail
         Glide.with(this).load(art.imageUrl).into(image)
         image.requestLayout()
 
@@ -45,18 +52,26 @@ class ArtDetailActivity : AppCompatActivity() {
         if (art.description.length > 80) {
             description = art.description.slice(0..80)
         }
-        binding.artDescriptionDetail.text = description
+        binding.tvArtDescription.text = description
 
-
-        setSupportActionBar(binding.topAppBar);
-        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
+        setSupportActionBar(binding.toolbarTop)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val viewManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         viewManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
-        binding.recycleView.layoutManager = viewManager
-        binding.recycleView.adapter = ArtListAdapter(this, repository.list())
+        binding.recyclerRecommended.layoutManager = viewManager
+        binding.recyclerRecommended.adapter = ArtListAdapter(this, repository.list())
 
-        val buttonComment = binding.commentButton
+        val likeButton = binding.btnLike
+        likeButton.setOnClickListener {
+            isLiked = !isLiked
+            updateLikeButton()
+            saveLikeStatus(art.id, isLiked)
+        }
+
+        loadLikeStatus(art.id)
+
+        val buttonComment = binding.btnComment
         buttonComment.setOnClickListener {
             val intent = Intent(this, CommentsActivity::class.java)
             intent.putExtra("id", art.id)
@@ -65,13 +80,49 @@ class ArtDetailActivity : AppCompatActivity() {
 
         val authProvider = MockAuthProvider(this)
         val visibilityState = if (authProvider.isAdmin) View.VISIBLE else View.GONE
-        binding.editButton.setOnClickListener {
+        binding.fabEdit.setOnClickListener {
             startActivity(Intent(this, SaveArtActivity::class.java))
         }
-        binding.editButton.visibility = visibilityState
+        binding.fabEdit.visibility = visibilityState
 
-        binding.artLocationButton.setOnClickListener {
+        binding.btnLocation.setOnClickListener {
             startActivity(Intent(this, CurrentArtLocationActivity::class.java))
+        }
+    }
+
+    private fun updateLikeButton() {
+        val icon = if (isLiked) {
+            R.drawable.ic_favorite_filled
+        } else {
+            R.drawable.outline_favorite_24
+        }
+        binding.btnLike.setImageResource(icon)
+    }
+
+    private fun saveLikeStatus(artId: Int, liked: Boolean) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+
+        val artRef = db.collection("artworks").document(artId.toString())
+        val likeRef = artRef.collection("likes").document(userId)
+
+        if (liked) {
+            likeRef.set(mapOf("liked" to true))
+        } else {
+            likeRef.delete()
+        }
+    }
+
+    private fun loadLikeStatus(artId: Int) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+
+        val artRef = db.collection("artworks").document(artId.toString())
+        val likeRef = artRef.collection("likes").document(userId)
+
+        likeRef.get().addOnSuccessListener { document ->
+            if (document != null && document.exists()) {
+                isLiked = document.getBoolean("liked") ?: false
+                updateLikeButton()
+            }
         }
     }
 
@@ -80,7 +131,6 @@ class ArtDetailActivity : AppCompatActivity() {
             finish()
             true
         }
-
         else -> {
             finish()
             true
