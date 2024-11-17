@@ -20,8 +20,9 @@ class FirebaseArtsRepository {
     }
 
     suspend fun add(art: Art): Art {
-        val result = collection.add(art).await().get().await()
+        val result = collection.add(art).await()
         art.id = result.id
+        result.set(art).await()
         return art
     }
 
