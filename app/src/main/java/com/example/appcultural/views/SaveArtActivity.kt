@@ -4,12 +4,18 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import com.example.appcultural.R
+import com.example.appcultural.data.FirebaseArtsRepository
 import com.example.appcultural.databinding.ActivitySaveArtBinding
+import com.example.appcultural.entities.Art
+import com.example.appcultural.entities.ArtLocation
+import kotlinx.coroutines.launch
 
 class SaveArtActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySaveArtBinding
@@ -66,11 +72,29 @@ class SaveArtActivity : AppCompatActivity() {
         val artistAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, artists)
         artistTextView.setAdapter(artistAdapter)
 
+        val repository = FirebaseArtsRepository()
+
         binding.artLocationField.setOnClickListener {
             startActivity(Intent(this, SaveArtLocationActivity::class.java))
         }
         binding.saveArtButton.setOnClickListener {
-            finish()
+            try {
+                val name = binding.artTitleField.text.toString()
+                val publishDate = binding.artPublishField.text.toString().toInt()
+                val description = binding.artDescriptionField.text.toString()
+                val author = binding.artArtistField.text.toString()
+                val isActive = binding.artIsActiveField.isChecked
+                val gender = listOf(binding.artGendersField.text.toString())
+                val imageUri = "https://www.artic.edu/iiif/2/5dca7347-c6dc-24dd-d073-d705b9cdc575/full/600,/0/default.jpg"
+                val location = ArtLocation(10, 10)
+                val art = Art("", name, publishDate, description, author, isActive, imageUri, gender, location)
+                lifecycleScope.launch {
+                    repository.add(art)
+                    finish()
+                }
+            } catch (err: Exception) {
+                Toast.makeText(this, "Erro ao salvar o artista: " + err.message, Toast.LENGTH_SHORT).show()
+            }
         }
 
         setSupportActionBar(binding.topAppBar);

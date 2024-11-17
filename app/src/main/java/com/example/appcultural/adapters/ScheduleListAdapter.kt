@@ -1,4 +1,3 @@
-// ScheduleListAdapter.kt
 package com.example.appcultural.adapters
 
 import android.view.LayoutInflater
@@ -6,10 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import java.text.SimpleDateFormat
 import com.example.appcultural.R
-import com.example.appcultural.entities.Schedule
+import com.example.appcultural.entities.ScheduleItem
 
-class ScheduleListAdapter(private val data: List<Schedule>):
+class ScheduleListAdapter(private val data: List<ScheduleItem>):
     RecyclerView.Adapter<ScheduleListAdapter.ScheduleViewHolder>() {
 
     class ScheduleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -24,8 +24,10 @@ class ScheduleListAdapter(private val data: List<Schedule>):
 
     override fun onBindViewHolder(holder: ScheduleViewHolder, position: Int) {
         val schedule = data[position]
-        holder.dayText.text = "${schedule.date} às ${schedule.hour}"
-        holder.countText.text = "${schedule.amount} visitantes"
+        val scheduleDate = schedule.date
+        val format = SimpleDateFormat("dd/MM/yyyy 'às' HH:mm")
+        holder.dayText.text = "Agendamento para: ${format.format(scheduleDate)}"
+        holder.countText.text = "${schedule.count} visitandes"
     }
 
     override fun getItemCount(): Int = data.size

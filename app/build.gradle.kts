@@ -50,16 +50,17 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.firebase.auth)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.glide)
-    implementation(libs.androidx.credentials)
-    implementation(libs.androidx.credentials.play.services.auth)
-    implementation(libs.googleid)
-
-    // Firebase BOM para controle de versão centralizado
-    implementation(platform("com.google.firebase:firebase-bom:32.2.0"))
-
-    // Firebase SDKs sem versão explícita
-    implementation("com.google.firebase:firebase-database-ktx")
-    implementation("com.google.firebase:firebase-firestore-ktx")
-    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation (libs.androidx.credentials)
+    implementation (libs.androidx.credentials.play.services.auth)
+    implementation (libs.googleid)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.firestore)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.androidx.lifecycle.runtime.ktx.v260)
+    implementation("com.google.android.gms:play-services-base:18.2.0")
 }
