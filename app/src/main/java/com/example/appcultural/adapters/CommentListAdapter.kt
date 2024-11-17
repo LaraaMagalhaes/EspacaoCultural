@@ -24,10 +24,10 @@ class CommentListAdapter(private val data: ArrayList<Comment>): RecyclerView.Ada
 
     override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
         val comment = data[position]
-        val authorText = holder.itemView.findViewById<TextView>(R.id.comment_author)
+        val authorText = holder.itemView.findViewById<TextView>(R.id.comment_author_name)
         authorText.text = comment.user.name
 
-        val commentContent = holder.itemView.findViewById<TextView>(R.id.comment_content)
+        val commentContent = holder.itemView.findViewById<TextView>(R.id.comment_content_text)
         commentContent.text = comment.content
     }
 }
