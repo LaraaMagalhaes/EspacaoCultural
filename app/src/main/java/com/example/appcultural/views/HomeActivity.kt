@@ -41,8 +41,13 @@ class HomeActivity: Fragment() {
         viewManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
         binding.recycleView.layoutManager = viewManager
         viewLifecycleOwner.lifecycleScope.launch {
-            val data = repository.list()
-            binding.recycleView.adapter = ArtListAdapter(requireContext(), data)
+            try {
+                val data = repository.list()
+                binding.recycleView.adapter = ArtListAdapter(requireContext(), data)
+            } catch (err: Exception) {
+                println("err")
+                println(err)
+            }
         }
 
         binding.filterActionButton.setOnClickListener {
