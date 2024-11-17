@@ -39,7 +39,7 @@ android {
     }
 
     buildFeatures{
-        viewBinding; true
+        viewBinding = true
     }
 }
 
@@ -62,4 +62,5 @@ dependencies {
     implementation(libs.firebase.firestore)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.androidx.lifecycle.runtime.ktx.v260)
+    implementation("com.google.android.gms:play-services-base:18.2.0")
 }
