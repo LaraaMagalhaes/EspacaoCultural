@@ -6,10 +6,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.coroutines.launch
+
 import com.example.appcultural.R
 import com.example.appcultural.adapters.ScheduleListAdapter
-import com.example.appcultural.data.MockScheduleRepository
+import com.example.appcultural.data.FirebaseSchedulesRepository
 import com.example.appcultural.databinding.ActivityScheduleListBinding
 
 class ScheduleListActivity : AppCompatActivity() {
@@ -26,13 +29,15 @@ class ScheduleListActivity : AppCompatActivity() {
             insets
         }
 
-        val repository = MockScheduleRepository()
-        val data = repository.list()
-        val adapter = ScheduleListAdapter(data)
+        val repository = FirebaseSchedulesRepository()
+        lifecycleScope.launch {
+            val data = repository.list()
+            val adapter = ScheduleListAdapter(data)
+            binding.recycleView.adapter = adapter
+        }
         binding.recycleView.layoutManager = LinearLayoutManager(this)
-        binding.recycleView.adapter = adapter
 
-        setSupportActionBar(binding.topAppBar);
+        setSupportActionBar(binding.topAppBar)
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
     }
 

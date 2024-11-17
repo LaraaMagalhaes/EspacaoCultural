@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import java.text.SimpleDateFormat
 import com.example.appcultural.R
 import com.example.appcultural.entities.ScheduleItem
 
@@ -22,7 +23,9 @@ class ScheduleListAdapter(private val data: List<ScheduleItem>):
 
     override fun onBindViewHolder(holder: ScheduleViewHolder, position: Int) {
         val schedule = data[position]
-        holder.dayText.text = schedule.date
+        val scheduleDate = schedule.date
+        val format = SimpleDateFormat("dd/MM/yyyy 'às' HH:mm")
+        holder.dayText.text = "Agendamento para: ${format.format(scheduleDate)}"
         holder.countText.text = "${schedule.count} visitandes"
     }
 

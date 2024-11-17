@@ -1,7 +1,9 @@
 package com.example.appcultural.entities
 
+import java.util.Date
+
 data class ScheduleItem(
-    val id: Int,
-    val date: String,
-    val count: Int
+    var id: String = "schedules-" + System.currentTimeMillis(),
+    val date: Date = Date(),
+    val count: Int = 0
 )
