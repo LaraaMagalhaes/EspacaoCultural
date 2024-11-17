@@ -4,28 +4,24 @@ import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.appcultural.data.MockAuthProvider
 import com.example.appcultural.databinding.ActivityLoginVisitBinding
-//import com.google.android.gms.auth.api.signin.GoogleSignInClient
-//import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
-
 
 class LoginVisitActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginVisitBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var authProvider: MockAuthProvider
-   // private lateinit var googleSignInClient : GoogleSignInClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Configura o binding
         binding = ActivityLoginVisitBinding.inflate(layoutInflater)
         setContentView(binding.main)
         authProvider = MockAuthProvider(this)
@@ -37,16 +33,19 @@ class LoginVisitActivity : AppCompatActivity() {
             false
         }}
 
+        // Configura o botão de login
         binding.loginButton.setOnClickListener {
             signIn()
         }
 
+        // Configura o botão de cadastro
         binding.signupButton.setOnClickListener {
             val intent = Intent(this, SignUpVisitActivity::class.java)
             startActivity(intent)
         }
 
-        binding.signupButtonGoogle.setOnClickListener{
+        // Configura o botão de login com Google (adicione a lógica do GoogleSignIn aqui)
+        binding.signupButtonGoogle.setOnClickListener {
             signIn()
         }
     }

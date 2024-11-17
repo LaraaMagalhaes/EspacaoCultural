@@ -11,9 +11,10 @@ import com.example.appcultural.entities.ScheduleItem
 
 class ScheduleListAdapter(private val data: List<ScheduleItem>):
     RecyclerView.Adapter<ScheduleListAdapter.ScheduleViewHolder>() {
+
     class ScheduleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val dayText = itemView.findViewById<TextView>(R.id.schedule_day)
-        val countText = itemView.findViewById<TextView>(R.id.visits_count)
+        val dayText: TextView = itemView.findViewById(R.id.schedule_day)
+        val countText: TextView = itemView.findViewById(R.id.visits_count)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScheduleViewHolder {
