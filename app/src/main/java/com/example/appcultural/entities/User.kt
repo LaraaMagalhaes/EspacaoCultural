@@ -1,6 +1,6 @@
 package com.example.appcultural.entities
 
 data class User(
-    val id: Int,
+    val id: String,
     val name: String
 )

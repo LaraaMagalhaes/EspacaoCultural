@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.appcultural.data.MockAuthProvider
@@ -19,21 +20,25 @@ import com.google.firebase.auth.auth
 
 class LoginVisitActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginVisitBinding
-    private lateinit var auth: FirebaseAuth;
+    private lateinit var auth: FirebaseAuth
+    private lateinit var authProvider: MockAuthProvider
    // private lateinit var googleSignInClient : GoogleSignInClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginVisitBinding.inflate(layoutInflater)
         setContentView(binding.main)
-        val authProvider = MockAuthProvider(this)
+        authProvider = MockAuthProvider(this)
+
+        binding.loginVisitPassword.editText?.setOnEditorActionListener { v, actionId, event ->  run {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                signIn()
+            }
+            false
+        }}
 
         binding.loginButton.setOnClickListener {
-            authProvider.isAdmin = false
-
-            logar(
-                binding.editTextTextEmail.editText?.text.toString(),
-                binding.loginEmployeeButton.editText?.text.toString())
+            signIn()
         }
 
         binding.signupButton.setOnClickListener {
@@ -44,13 +49,14 @@ class LoginVisitActivity : AppCompatActivity() {
         binding.signupButtonGoogle.setOnClickListener{
             signIn()
         }
-
-
-
     }
 
     private fun signIn(){
-    //    val intent = googleSignInClient.si
+        authProvider.isAdmin = false
+
+        logar(
+            binding.loginVisitEmail.editText?.text.toString(),
+            binding.loginVisitPassword.editText?.text.toString())
     }
 
     public override fun onStart() {
