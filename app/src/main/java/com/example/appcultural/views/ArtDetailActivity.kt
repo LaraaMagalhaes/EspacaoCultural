@@ -8,15 +8,18 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
-import com.example.appcultural.R
-import com.example.appcultural.adapters.ArtListAdapter
-import com.example.appcultural.data.MockArtRepository
-import com.example.appcultural.data.MockAuthProvider
-import com.example.appcultural.databinding.ActivityArtDetailBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.launch
+
+import com.example.appcultural.R
+import com.example.appcultural.adapters.ArtListAdapter
+import com.example.appcultural.data.FirebaseArtsRepository
+import com.example.appcultural.data.MockAuthProvider
+import com.example.appcultural.databinding.ActivityArtDetailBinding
 
 class ArtDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityArtDetailBinding
@@ -35,24 +38,47 @@ class ArtDetailActivity : AppCompatActivity() {
         }
 
         db = FirebaseFirestore.getInstance()
-
-        val repository = MockArtRepository()
-        val id = intent.getIntExtra("id", 0)
-        val art = repository.findById(id)
-        if (art == null) {
+        val repository = FirebaseArtsRepository()
+        val id = intent.getStringExtra("id")
+        if (id == null) {
             finish()
             return
         }
 
-        val image = binding.imageArtDetail
-        Glide.with(this).load(art.imageUrl).into(image)
-        image.requestLayout()
+        val context = this
+        lifecycleScope.launch {
+            val art = repository.findById(id)
+            if (art == null) {
+                finish()
+                return@launch
+            }
 
-        var description = art.description
-        if (art.description.length > 80) {
-            description = art.description.slice(0..80)
+            updateImage(art.imageUrl)
+
+            var description = art.description
+            if (art.description.length > 80) {
+                description = art.description.slice(0..80)
+            }
+            binding.tvArtDescription.text = description
+
+            binding.recyclerRecommended.adapter = ArtListAdapter(context, repository.list())
+
+            val likeButton = binding.btnLike
+            likeButton.setOnClickListener {
+                isLiked = !isLiked
+                updateLikeButton()
+                saveLikeStatus(art.id, isLiked)
+            }
+
+            loadLikeStatus(art.id)
+
+            val buttonComment = binding.btnComment
+            buttonComment.setOnClickListener {
+                val intent = Intent(context, CommentsActivity::class.java)
+                intent.putExtra("id", art.id)
+                startActivity(intent)
+            }
         }
-        binding.tvArtDescription.text = description
 
         setSupportActionBar(binding.toolbarTop)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -60,23 +86,6 @@ class ArtDetailActivity : AppCompatActivity() {
         val viewManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         viewManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
         binding.recyclerRecommended.layoutManager = viewManager
-        binding.recyclerRecommended.adapter = ArtListAdapter(this, repository.list())
-
-        val likeButton = binding.btnLike
-        likeButton.setOnClickListener {
-            isLiked = !isLiked
-            updateLikeButton()
-            saveLikeStatus(art.id, isLiked)
-        }
-
-        loadLikeStatus(art.id)
-
-        val buttonComment = binding.btnComment
-        buttonComment.setOnClickListener {
-            val intent = Intent(this, CommentsActivity::class.java)
-            intent.putExtra("id", art.id)
-            startActivity(intent)
-        }
 
         val authProvider = MockAuthProvider(this)
         val visibilityState = if (authProvider.isAdmin) View.VISIBLE else View.GONE
@@ -90,6 +99,12 @@ class ArtDetailActivity : AppCompatActivity() {
         }
     }
 
+    private fun updateImage(imageUrl: String) {
+        val image = binding.imageArtDetail
+        Glide.with(this).load(imageUrl).into(image)
+        image.requestLayout()
+    }
+
     private fun updateLikeButton() {
         val icon = if (isLiked) {
             R.drawable.ic_favorite_filled
@@ -99,7 +114,7 @@ class ArtDetailActivity : AppCompatActivity() {
         binding.btnLike.setImageResource(icon)
     }
 
-    private fun saveLikeStatus(artId: Int, liked: Boolean) {
+    private fun saveLikeStatus(artId: String, liked: Boolean) {
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
         val artRef = db.collection("artworks").document(artId.toString())
@@ -112,7 +127,7 @@ class ArtDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadLikeStatus(artId: Int) {
+    private fun loadLikeStatus(artId: String) {
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
         val artRef = db.collection("artworks").document(artId.toString())
