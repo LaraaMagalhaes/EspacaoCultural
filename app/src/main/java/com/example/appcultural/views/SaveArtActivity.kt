@@ -87,7 +87,8 @@ class SaveArtActivity : AppCompatActivity() {
                 val gender = listOf(binding.artGendersField.text.toString())
                 val imageUri = "https://www.artic.edu/iiif/2/5dca7347-c6dc-24dd-d073-d705b9cdc575/full/600,/0/default.jpg"
                 val location = ArtLocation(10, 10)
-                val art = Art("", name, publishDate, description, author, isActive, imageUri, gender, location)
+                val albumId: String = ""
+                val art = Art("", name, publishDate, description, author, isActive, imageUri, gender, location, albumId)
                 lifecycleScope.launch {
                     repository.add(art)
                     finish()
