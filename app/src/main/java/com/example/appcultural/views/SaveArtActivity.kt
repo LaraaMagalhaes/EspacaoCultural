@@ -30,6 +30,7 @@ class SaveArtActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
         val genders = listOf(
             "Impressionismo",
             "Expressionismo",
@@ -87,19 +88,18 @@ class SaveArtActivity : AppCompatActivity() {
                 val gender = listOf(binding.artGendersField.text.toString())
                 val imageUri = "https://www.artic.edu/iiif/2/5dca7347-c6dc-24dd-d073-d705b9cdc575/full/600,/0/default.jpg"
                 val location = ArtLocation(10, 10)
-                val albumId: String = ""
-                val art = Art("", name, publishDate, description, author, isActive, imageUri, gender, location, albumId)
+                val art = Art("", name, publishDate, description, author, isActive, imageUri, gender, location)
                 lifecycleScope.launch {
                     repository.add(art)
                     finish()
                 }
             } catch (err: Exception) {
-                Toast.makeText(this, "Erro ao salvar o artista: " + err.message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Erro ao salvar a arte: " + err.message, Toast.LENGTH_SHORT).show()
             }
         }
 
-        setSupportActionBar(binding.topAppBar);
-        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
+        setSupportActionBar(binding.topAppBar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -108,7 +108,6 @@ class SaveArtActivity : AppCompatActivity() {
                 finish()
                 true
             }
-
             else -> {
                 finish()
                 true

@@ -24,7 +24,7 @@ class AlbumsListActivity : Fragment() {
     private lateinit var binding: ActivityAlbumsListBinding
     private lateinit var albumAdapter: AlbumListAdapter
     private val albumsRepository = FirebaseAlbumsRepository()
-    private var originalAlbumList = mutableListOf<Album>() // Lista completa de álbuns para pesquisa
+    private var originalAlbumList = mutableListOf<Album>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,9 +34,10 @@ class AlbumsListActivity : Fragment() {
         binding = ActivityAlbumsListBinding.inflate(inflater, container, false)
         return binding.main
     }
+
     override fun onResume() {
         super.onResume()
-        loadAlbumsFromFirestore() // Recarregar os álbuns ao retornar para a tela
+        loadFromFirestore()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,15 +52,11 @@ class AlbumsListActivity : Fragment() {
         binding.recycleView.layoutManager = GridLayoutManager(requireContext(), 2)
         binding.recycleView.adapter = albumAdapter
 
-        // Configurar SearchView
         setupSearchView()
+        loadFromFirestore()
 
-        // Carregar os álbuns do Firestore
-        loadAlbumsFromFirestore()
-
-        // Botão para adicionar novo álbum
         binding.addAlbumButton.setOnClickListener {
-            showAddAlbumPopup()
+            showAddPopup()
         }
     }
 
@@ -67,7 +64,7 @@ class AlbumsListActivity : Fragment() {
         val searchView = binding.constraintLayout.findViewById<SearchView>(R.id.search_view)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                return false // Não precisamos de ação ao submeter
+                return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
@@ -76,28 +73,28 @@ class AlbumsListActivity : Fragment() {
                         album.name.contains(newText, ignoreCase = true)
                     }
                 } else {
-                    originalAlbumList // Retorna a lista original se não houver texto
+                    originalAlbumList
                 }
-                albumAdapter.updateAlbums(filteredList)
+                albumAdapter.updateList(filteredList)
                 return true
             }
         })
     }
 
-    private fun loadAlbumsFromFirestore() {
+    private fun loadFromFirestore() {
         lifecycleScope.launch {
             try {
-                val albums = albumsRepository.listAlbums()
+                val albums = albumsRepository.fetchAll()
                 originalAlbumList.clear()
                 originalAlbumList.addAll(albums)
-                albumAdapter.updateAlbums(originalAlbumList)
+                albumAdapter.updateList(originalAlbumList)
             } catch (e: Exception) {
                 Toast.makeText(requireContext(), "Erro ao carregar álbuns: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun showAddAlbumPopup() {
+    private fun showAddPopup() {
         val dialogBuilder = AlertDialog.Builder(requireContext())
         val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.activity_dialog_add_album, null)
         dialogBuilder.setView(dialogView)
@@ -110,9 +107,9 @@ class AlbumsListActivity : Fragment() {
             if (albumName.isNotEmpty()) {
                 lifecycleScope.launch {
                     try {
-                        val newAlbum = albumsRepository.createAlbum(albumName)
-                        originalAlbumList.add(newAlbum) // Atualiza a lista completa
-                        albumAdapter.addAlbum(newAlbum)
+                        val newAlbum = albumsRepository.create(albumName)
+                        originalAlbumList.add(newAlbum)
+                        albumAdapter.addItem(newAlbum)
                         Toast.makeText(requireContext(), "Álbum criado com sucesso!", Toast.LENGTH_SHORT).show()
                     } catch (e: Exception) {
                         Toast.makeText(requireContext(), "Erro ao criar álbum: ${e.message}", Toast.LENGTH_SHORT).show()

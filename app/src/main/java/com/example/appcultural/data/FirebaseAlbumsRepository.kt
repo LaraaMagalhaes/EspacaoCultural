@@ -8,7 +8,7 @@ class FirebaseAlbumsRepository {
     private val db = FirebaseFirestore.getInstance()
     private val collection = db.collection("albums")
 
-    suspend fun listAlbums(): List<Album> {
+    suspend fun fetchAll(): List<Album> {
         val result = collection.get().await()
         return result.documents.mapNotNull {
             val album = it.toObject(Album::class.java)
@@ -24,22 +24,20 @@ class FirebaseAlbumsRepository {
         return album
     }
 
-
-    suspend fun createAlbum(name: String): Album {
+    suspend fun create(name: String): Album {
         val album = Album(name = name)
         val result = collection.add(album).await()
         album.id = result.id
         return album
     }
 
-    suspend fun addArtToAlbum(albumId: String, artId: String) {
+    suspend fun appendArt(albumId: String, artId: String) {
         collection.document(albumId)
             .update("artIds", com.google.firebase.firestore.FieldValue.arrayUnion(artId))
             .await()
     }
 
-    // Método adicionado para atualizar o álbum
-    suspend fun updateAlbum(albumId: String, updatedAlbum: Album) {
+    suspend fun update(albumId: String, updatedAlbum: Album) {
         collection.document(albumId).set(updatedAlbum).await()
     }
 }

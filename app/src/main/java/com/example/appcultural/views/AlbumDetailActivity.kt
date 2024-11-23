@@ -24,46 +24,34 @@ class AlbumDetailActivity : AppCompatActivity() {
         binding = ActivityAlbumDetailBinding.inflate(layoutInflater)
         setContentView(binding.main)
 
-        // Obter o ID do álbum da Intent
         albumId = intent.getStringExtra("albumId") ?: run {
             finish()
             return
         }
-
-        // Configurar o título da AppBar
         binding.topAppBar.title = intent.getStringExtra("albumName") ?: "Detalhes do Álbum"
         binding.topAppBar.setNavigationOnClickListener {
             finish()
         }
-
-        // Configurar o menu
         setupMenu()
-
-        // Configurar o RecyclerView
         setupRecyclerView()
-
-        // Carregar as artes do álbum
         loadArtsFromDatabase()
     }
 
     private fun setupMenu() {
-        // Infla o menu dinamicamente
         val menuId = resources.getIdentifier("menu_album_detail", "menu", packageName)
         if (menuId != 0) {
             binding.topAppBar.inflateMenu(menuId)
         } else {
             Log.e("MenuError", "Menu não encontrado")
         }
-
-        // Configurar listener para os itens do menu
         binding.topAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 getResourceId("edit", "id") -> {
-                    editAlbumName()
+                    editName()
                     true
                 }
                 getResourceId("share", "id") -> {
-                    shareAlbum()
+                    shareContent()
                     true
                 }
                 else -> false
@@ -86,7 +74,7 @@ class AlbumDetailActivity : AppCompatActivity() {
             try {
                 val album = albumsRepository.findById(albumId)
                 val arts = if (album != null && album.artIds.isNotEmpty()) {
-                    artsRepository.getArtsByIds(album.artIds)
+                    artsRepository.fetchByIds(album.artIds)
                 } else {
                     emptyList()
                 }
@@ -98,7 +86,7 @@ class AlbumDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun editAlbumName() {
+    private fun editName() {
         val editText = EditText(this).apply {
             hint = "Novo nome do álbum"
         }
@@ -109,7 +97,7 @@ class AlbumDetailActivity : AppCompatActivity() {
             .setPositiveButton("Salvar") { _, _ ->
                 val newName = editText.text.toString().trim()
                 if (newName.isNotEmpty()) {
-                    updateAlbumNameInFirebase(newName)
+                    updateNameInFirebase(newName)
                 } else {
                     Toast.makeText(this, "O nome não pode estar vazio!", Toast.LENGTH_SHORT).show()
                 }
@@ -118,7 +106,7 @@ class AlbumDetailActivity : AppCompatActivity() {
             .show()
     }
 
-    private fun updateAlbumNameInFirebase(newName: String) {
+    private fun updateNameInFirebase(newName: String) {
         val albumsRepository = FirebaseAlbumsRepository()
 
         lifecycleScope.launch {
@@ -126,7 +114,7 @@ class AlbumDetailActivity : AppCompatActivity() {
                 val album = albumsRepository.findById(albumId)
                 if (album != null) {
                     album.name = newName
-                    albumsRepository.updateAlbum(albumId, album)
+                    albumsRepository.update(albumId, album)
                     binding.topAppBar.title = newName
                     Toast.makeText(this@AlbumDetailActivity, "Nome alterado com sucesso!", Toast.LENGTH_SHORT).show()
                 }
@@ -137,7 +125,7 @@ class AlbumDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun shareAlbum() {
+    private fun shareContent() {
         val shareIntent = Intent(Intent.ACTION_SEND).apply {
             type = "text/plain"
             putExtra(Intent.EXTRA_SUBJECT, "Confira este álbum!")

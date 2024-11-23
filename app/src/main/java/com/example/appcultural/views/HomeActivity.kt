@@ -42,7 +42,7 @@ class HomeActivity: Fragment() {
         binding.recycleView.layoutManager = viewManager
         viewLifecycleOwner.lifecycleScope.launch {
             try {
-                val data = repository.list()
+                val data = repository.fetchAll()
                 binding.recycleView.adapter = ArtListAdapter(requireContext(), data)
             } catch (err: Exception) {
                 println("err")
@@ -64,7 +64,7 @@ class HomeActivity: Fragment() {
         dialogBuilder.setPositiveButton("Filtrar") { dialog, _ ->
             dialog.dismiss()
         }
-
+        
         dialogBuilder.setNegativeButton("Cancelar") { dialog, _ ->
             dialog.dismiss()
         }

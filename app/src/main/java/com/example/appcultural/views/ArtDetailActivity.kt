@@ -56,7 +56,7 @@ class ArtDetailActivity : AppCompatActivity() {
 
     private fun setupArtDetails(repository: FirebaseArtsRepository, artId: String) {
         lifecycleScope.launch {
-            val art = repository.list().find { it.id == artId }
+            val art = repository.fetchAll().find { it.id == artId }
             if (art == null) {
                 finish()
                 return@launch
@@ -88,7 +88,7 @@ class ArtDetailActivity : AppCompatActivity() {
         binding.recyclerRecommended.layoutManager = layoutManager
 
         lifecycleScope.launch {
-            val recommendedArts = repository.list()
+            val recommendedArts = repository.fetchAll()
             binding.recyclerRecommended.adapter = ArtListAdapter(this@ArtDetailActivity, recommendedArts)
         }
     }
@@ -110,7 +110,7 @@ class ArtDetailActivity : AppCompatActivity() {
         }
 
         binding.fabFavorite.setOnClickListener {
-            showSelectAlbumDialog(artId)
+            showSelectDialog(artId)
         }
     }
 
@@ -150,28 +150,28 @@ class ArtDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun showSelectAlbumDialog(artId: String) {
+    private fun showSelectDialog(artId: String) {
         val albumsRepository = FirebaseAlbumsRepository()
 
         lifecycleScope.launch {
-            val albums = albumsRepository.listAlbums()
+            val albums = albumsRepository.fetchAll()
             val albumNames = albums.map { it.name }.toTypedArray()
 
             AlertDialog.Builder(this@ArtDetailActivity)
                 .setTitle("Selecione um Álbum")
                 .setItems(albumNames) { _, which ->
                     val selectedAlbum = albums[which]
-                    addArtToAlbum(selectedAlbum.id, artId)
+                    appendArtToAlbum(selectedAlbum.id, artId)
                 }
                 .setPositiveButton("Criar Novo Álbum") { _, _ ->
-                    showCreateAlbumDialog(artId)
+                    showCreateDialog(artId)
                 }
                 .setNegativeButton("Cancelar", null)
                 .show()
         }
     }
 
-    private fun showCreateAlbumDialog(artId: String) {
+    private fun showCreateDialog(artId: String) {
         val albumsRepository = FirebaseAlbumsRepository()
         val input = EditText(this)
 
@@ -183,8 +183,8 @@ class ArtDetailActivity : AppCompatActivity() {
                 if (albumName.isNotEmpty()) {
                     lifecycleScope.launch {
                         try {
-                            val newAlbum = albumsRepository.createAlbum(albumName)
-                            addArtToAlbum(newAlbum.id, artId)
+                            val newAlbum = albumsRepository.create(albumName)
+                            appendArtToAlbum(newAlbum.id, artId)
                         } catch (e: Exception) {
                             Toast.makeText(this@ArtDetailActivity, "Erro ao criar álbum", Toast.LENGTH_SHORT).show()
                         }
@@ -197,10 +197,10 @@ class ArtDetailActivity : AppCompatActivity() {
             .show()
     }
 
-    private fun addArtToAlbum(albumId: String, artId: String) {
+    private fun appendArtToAlbum(albumId: String, artId: String) {
         lifecycleScope.launch {
             try {
-                FirebaseAlbumsRepository().addArtToAlbum(albumId, artId)
+                FirebaseAlbumsRepository().appendArt(albumId, artId)
                 Toast.makeText(this@ArtDetailActivity, "Arte adicionada ao álbum", Toast.LENGTH_SHORT).show()
             } catch (e: Exception) {
                 Toast.makeText(this@ArtDetailActivity, "Erro ao adicionar arte ao álbum", Toast.LENGTH_SHORT).show()

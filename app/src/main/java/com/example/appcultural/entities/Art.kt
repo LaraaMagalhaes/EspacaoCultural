@@ -9,6 +9,5 @@ data class Art(
     public val isActive: Boolean = true,
     public val imageUrl: String = "",
     public val genders: List<String> = listOf(),
-    public val location: ArtLocation = ArtLocation(10, 10),
-    public val albumId: String = ""
+    public val location: ArtLocation = ArtLocation(10, 10)
 )
