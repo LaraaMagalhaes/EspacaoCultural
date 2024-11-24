@@ -64,7 +64,7 @@ class HomeActivity: Fragment() {
         dialogBuilder.setPositiveButton("Filtrar") { dialog, _ ->
             dialog.dismiss()
         }
-        
+
         dialogBuilder.setNegativeButton("Cancelar") { dialog, _ ->
             dialog.dismiss()
         }

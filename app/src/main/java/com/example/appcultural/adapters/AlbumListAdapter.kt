@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.appcultural.R
 import com.example.appcultural.entities.Album
 import com.example.appcultural.views.AlbumDetailActivity
@@ -31,7 +32,13 @@ class AlbumListAdapter(
     override fun onBindViewHolder(holder: AlbumViewHolder, position: Int) {
         val album = albumList[position]
         holder.textAlbumName.text = album.name
-        Glide.with(context).load(album.imageUrl).into(holder.imageAlbum)
+        if (album.imageUrl.isNotEmpty()) {
+            Glide.with(context)
+                .load(album.imageUrl)
+                .into(holder.imageAlbum)
+        } else {
+            holder.imageAlbum.setImageDrawable(null)
+        }
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context, AlbumDetailActivity::class.java)
@@ -40,6 +47,7 @@ class AlbumListAdapter(
             context.startActivity(intent)
         }
     }
+
 
     override fun getItemCount(): Int = albumList.size
 

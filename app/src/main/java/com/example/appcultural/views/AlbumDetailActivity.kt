@@ -37,6 +37,33 @@ class AlbumDetailActivity : AppCompatActivity() {
         loadArtsFromDatabase()
     }
 
+    private fun confirmDelete() {
+        AlertDialog.Builder(this)
+            .setTitle("Excluir Álbum")
+            .setMessage("Tem certeza de que deseja excluir este álbum? Esta ação não pode ser desfeita.")
+            .setPositiveButton("Excluir") { _, _ ->
+                deleteAlbumFromFirebase() // Chama a função para excluir o álbum
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
+
+    private fun deleteAlbumFromFirebase() {
+        val albumsRepository = FirebaseAlbumsRepository()
+
+        lifecycleScope.launch {
+            try {
+                albumsRepository.delete(albumId) // Chama o repositório para excluir
+                Toast.makeText(this@AlbumDetailActivity, "Álbum excluído com sucesso!", Toast.LENGTH_SHORT).show()
+                finish() // Fecha a tela de detalhes do álbum
+            } catch (e: Exception) {
+                Log.e("AlbumDetailActivity", "Erro ao excluir o álbum", e)
+                Toast.makeText(this@AlbumDetailActivity, "Erro ao excluir o álbum", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+
     private fun setupMenu() {
         val menuId = resources.getIdentifier("menu_album_detail", "menu", packageName)
         if (menuId != 0) {
@@ -44,6 +71,7 @@ class AlbumDetailActivity : AppCompatActivity() {
         } else {
             Log.e("MenuError", "Menu não encontrado")
         }
+
         binding.topAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 getResourceId("edit", "id") -> {
@@ -54,10 +82,15 @@ class AlbumDetailActivity : AppCompatActivity() {
                     shareContent()
                     true
                 }
+                getResourceId("delete", "id") -> {
+                    confirmDelete() // Chama a função de confirmação de exclusão
+                    true
+                }
                 else -> false
             }
         }
     }
+
 
     private fun setupRecyclerView() {
         val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL).apply {
@@ -72,12 +105,22 @@ class AlbumDetailActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             try {
+                // Busca o álbum pelo ID
                 val album = albumsRepository.findById(albumId)
-                val arts = if (album != null && album.artIds.isNotEmpty()) {
+                if (album == null) {
+                    Toast.makeText(this@AlbumDetailActivity, "Álbum não encontrado!", Toast.LENGTH_SHORT).show()
+                    finish()
+                    return@launch
+                }
+
+                // Carrega as artes associadas ao álbum
+                val arts = if (album.artIds.isNotEmpty()) {
                     artsRepository.fetchByIds(album.artIds)
                 } else {
                     emptyList()
                 }
+
+                // Atualiza a interface com as artes
                 binding.recycleView.adapter = ArtListAdapter(this@AlbumDetailActivity, arts)
             } catch (e: Exception) {
                 Log.e("AlbumDetailActivity", "Erro ao carregar as artes do álbum", e)
@@ -85,6 +128,7 @@ class AlbumDetailActivity : AppCompatActivity() {
             }
         }
     }
+
 
     private fun editName() {
         val editText = EditText(this).apply {

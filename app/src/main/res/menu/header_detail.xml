@@ -4,12 +4,15 @@
         android:id="@+id/edit"
         android:icon="@drawable/rounded_edit_24"
         android:title="Editar"
-        android:contentDescription="Editar"
-        />
+        android:contentDescription="Editar" />
+    <item
+        android:id="@+id/delete"
+        android:icon="@drawable/rounded_edit_24"
+        android:title="Excluir"
+        android:contentDescription="Excluir" />
     <item
         android:id="@+id/share"
         android:icon="@drawable/share_24"
         android:title="Compartilhar"
-        android:contentDescription="Compartilhar"
-        />
+        android:contentDescription="Compartilhar" />
 </menu>
